@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Flight Booker</title>
+</head>
+<body>
+    <main>
+        <div class='title'>
+            <h1>Flight Booker</h1>
+        </div>
+        <div class='flight-booker'>
+            <div class="container">
+                <label for='flight-type'></label>
+                <select name='flight-type' id='flight-type'>
+                    <option value='one-way' class='flight-option'>One Way</option>
+                    <option value='round-trip' class='flight-option'>Round Trip</option>
+                </select>
+            </div>
+            <div class="container">
+                <label for='depart-date'></label>
+                <input name='depart-date' class='date-input' id='depart-date'>
+            </div>
+            <div class="container">
+                <label for='return-date'></label>
+                <input name='return-date' class='date-input' id='return-date'>
+            </div>
+            <div class='container'>
+                <button id='book-btn'>Book</button>
+            </div>
+        </div>
+    </main>
+    <script src="main.js"></script>
+</body>
+</html>
