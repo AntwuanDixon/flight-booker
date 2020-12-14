@@ -23,8 +23,13 @@ function giveDefaultDate (field) {
 bookBtn.addEventListener('click', () => {
     function makeFlightMessage() {
         let flightTypePure = flightType.options[flightType.selectedIndex].text.toLowerCase();
-        let flightMessage = "Your " + flightTypePure + " flight was successfully booked." + "\n Departing: " + departDate.value + "\n Returning: " + returnDate.value;
-        return flightMessage;
+        if (flightTypePure === 'round trip') {
+            let flightMessage = "Your " + flightTypePure + " flight was successfully booked." + "\nDeparting: " + departDate.value + "\nReturning: " + returnDate.value;
+            return flightMessage;
+        } else {
+            let flightMessage = "Your " + flightTypePure + " flight was successfully booked." + "\nDeparting: " + departDate.value;
+            return flightMessage;
+        }
     }
     alert(makeFlightMessage())
 });
@@ -81,10 +86,12 @@ function convertToUTC(date) {
 function checkDateLogic() {
     checkDateFormat(departDate);
     checkDateFormat(returnDate);
-    if (convertToUTC(departDate) > convertToUTC(returnDate)) {
-        bookBtn.disabled = true;
-        console.log("Error! Depart date is after return date.")
-    } else {
-        bookBtn.disabled = false;
+    if (flightTypePure === 'round trip') {
+        if (convertToUTC(departDate) > convertToUTC(returnDate)) {
+            bookBtn.disabled = true;
+            console.log("Error! Depart date is after return date.")
+        } else {
+            bookBtn.disabled = false;
+        }
     }
 }
