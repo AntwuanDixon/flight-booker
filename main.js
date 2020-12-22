@@ -36,14 +36,15 @@ bookBtn.addEventListener('click', () => {
 
 flightType.addEventListener('change', () => {
     toggleReturnInput();
+    checkDateLogic();
 })
 
-departDate.addEventListener('input', () => {
-    checkDateLogic();
+departDate.addEventListener('input', () => {  
+    checkDateFormat(departDate);
 })
 
 returnDate.addEventListener('input', () => {
-    checkDateLogic();
+    checkDateFormat(returnDate);
 })
 
 function toggleReturnInput () {
@@ -65,12 +66,14 @@ function checkDateFormat(date) {
     let dateUTC = convertToUTC(date);
     if (Object.prototype.toString.call(dateUTC) === "[object Date]") {
         if (isNaN(dateUTC.getTime())) {
+            console.log('button disabled');
             bookBtn.disabled = true;
             date.style.backgroundColor = '#ff9d9d';
             
         } else {
             bookBtn.disabled = false;
             date.style.backgroundColor = 'white';
+            checkDateIsFuture(dateUTC);
         }
       } else {
         bookBtn.disabled = true;
@@ -84,8 +87,7 @@ function convertToUTC(date) {
 }
 
 function checkDateLogic() {
-    checkDateFormat(departDate);
-    checkDateFormat(returnDate);
+    let flightTypePure = flightType.options[flightType.selectedIndex].text.toLowerCase();
     if (flightTypePure === 'round trip') {
         if (convertToUTC(departDate) > convertToUTC(returnDate)) {
             bookBtn.disabled = true;
@@ -93,5 +95,17 @@ function checkDateLogic() {
         } else {
             bookBtn.disabled = false;
         }
+    }
+}
+
+function checkDateIsFuture(date) {
+    let today = new Date();
+    let todayNoTime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    let dateNoTime = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    if (dateNoTime < todayNoTime) {
+        bookBtn.disabled = true;
+    } else {
+        bookBtn.disabled = false;
+        checkDateLogic();
     }
 }
